@@ -115,7 +115,7 @@ task-manager/
 ## 1️⃣ Clone Repository
 
 ```bash
-git clone <your-repo-link>
+git clone https://github.com/AyushAntil007/Task-Manager-MERN.git
 cd project-folder
 ```
 
@@ -132,7 +132,7 @@ Create `.env` file:
 
 ```env
 PORT=5000
-MONGO_URI=mongodb://127.0.0.1:27017/taskmanager
+MONGO_URI=mongodb://127.0.0.1:27017/mydatabase
 JWT_SECRET=your_super_secret_key
 ```
 
