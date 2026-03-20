@@ -1,24 +1,31 @@
-const express =  require('express')
-const app = express();
+require('dotenv').config();
+const express = require('express');
 const cors = require('cors');
-// CORS = Cross-Origin Resource Sharing
 
+const connectDB = require('./config/db');
 const authRoutes = require('./routes/authRoutes');
+const taskRoutes = require('./routes/taskRoutes');
 
-const taskRoutes = require('./routes/taskRoutes')
+const app = express();
 
-// It allows your backend to accept requests from a different origin (domain/port).
-
+// middleware
 app.use(express.json());
 app.use(cors());
+
+// routes
 app.use('/api/auth', authRoutes);
-//“Use all routes inside authRoutes with a base path /api/auth”
+app.use('/api/tasks', taskRoutes);
 
-
-app.get('/', (req,res) => {
-  res.send("api running");
+// test route
+app.get('/', (req, res) => {
+  res.send('API Running');
 });
 
-app.listen(5000 , ()=> {
-  console.log("server running on port 5000")
-})
+// connect DB
+connectDB();
+
+// start server
+const PORT = process.env.PORT || 5000;
+app.listen(PORT, () => {
+  console.log(`Server running on port ${PORT}`);
+});

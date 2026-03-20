@@ -13,22 +13,37 @@ export default function Dashboard(){
 
     //get tasks
 
-    const fetchTasks = async ()=>{
-        const res = await axios.get('http://localhost:5000/api/tasks', {
-        headers: { Authorization: `Bearer ${token}` }
-        });
-    setTasks(res.data);
+    const fetchTasks = async () => {
+        try {
+            const res = await axios.get('http://localhost:5000/api/tasks', {
+            headers: { Authorization: `Bearer ${token}` }
+            });
+            setTasks(res.data);
+        } catch (error) {
+            console.error('Fetch tasks error:', error);
+            alert('Failed to load tasks: ' + (error?.response?.data?.msg || error.message));
+        }
     };
 
 
   //create tasks
     
   const createTask = async () => {
-    await axios.post('http://localhost:5000/api/tasks',
-      { title },
-      { headers: { Authorization: `Bearer ${token}` } }
-    );
-    fetchTasks();
+    if (!title.trim()) {
+      alert('Task title cannot be empty');
+      return;
+    }
+    try {
+      await axios.post('http://localhost:5000/api/tasks',
+        { title },
+        { headers: { Authorization: `Bearer ${token}` } }
+      );
+      setTitle('');
+      fetchTasks();
+    } catch (error) {
+      console.error('Create task error:', error);
+      alert('Failed to create task: ' + (error?.response?.data?.msg || error.message));
+    }
   };
 
 
