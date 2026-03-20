@@ -10,7 +10,7 @@ export default function Login() {
     setLoading(true);
 
     try {
-      const res = await axios.post('http://localhost:5000/api/auth/login', form);
+      const res = await axios.post('http://127.0.0.1:5000/api/auth/login', form);
       localStorage.setItem('token', res.data.token);
       alert("Login Successful");
       window.location.href = '/dashboard';
