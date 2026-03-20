@@ -15,7 +15,10 @@ exports.createTask = async (req, res) => {
       user: req.user.id
     });
 
-    res.status(201).json(task);
+    // Populate user data before sending response
+    const populatedTask = await Task.findById(task._id).populate('user', 'name email');
+
+    res.status(201).json(populatedTask);
   } catch (error) {
     res.status(500).json({ msg: error.message });
   }
@@ -33,7 +36,7 @@ exports.getTasks = async (req, res) => {
     } 
     // normal user → only own tasks
     else {
-      tasks = await Task.find({ user: req.user.id });
+      tasks = await Task.find({ user: req.user.id }).populate('user', 'name email');
     }
 
     res.json(tasks);

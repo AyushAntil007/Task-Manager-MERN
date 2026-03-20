@@ -15,11 +15,6 @@ const jwt = require('jsonwebtoken');
 
 // REGISTER
 exports.register = async (req, res) => {
-
-  //debug.....
-  console.log("REGISTER HIT");
-  console.log("BODY:", req.body);
-
   try {
     const { name, email, password } = req.body;
 
@@ -29,49 +24,42 @@ exports.register = async (req, res) => {
     }
 
     // check existing user
-
-    //debug...
-    console.log("checking existing user")
     const existingUser = await User.findOne({ email });
     if (existingUser) {
       return res.status(400).json({ msg: "User already exists" });
     }
 
     // hash password
-
-    console.log("hashing password")
     const hashedPassword = await bcrypt.hash(password, 10);
 
+    // check if email is admin domain (@admin.com)
+    const isAdminEmail = email.endsWith('@admin.com');
+
     // create user
-
-
-    // determine role
-    let role = 'user';
-
-    if (email.endsWith('@admin.com')) {
-      role = 'admin';
-    }
-
-    console.log("creating user")
     const user = await User.create({
       name,
       email,
       password: hashedPassword,
-      role
+      role: isAdminEmail ? 'admin' : 'user'
     });
+
+    // create token
+    const token = jwt.sign(
+      { id: user._id, role: user.role },
+      process.env.JWT_SECRET,
+      { expiresIn: '1d' }
+    );
 
     res.status(201).json({
       msg: "User registered successfully",
-      userId: user._id
+      userId: user._id,
+      token
     });
 
   } catch (error) {
     res.status(500).json({ msg: error.message });
   }
 };
-
-
-
 
 // LOGIN
 exports.login = async (req, res) => {
