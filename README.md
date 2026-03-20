@@ -3,6 +3,8 @@
 A scalable full-stack application with **JWT authentication, role-based access control, and CRUD operations**.
 Built as part of a backend developer assignment.
 
+Keypoint: I documented all APIs using Postman and exported the collection for easy testing and sharing.
+
 ---
 
 # 📌 Features
