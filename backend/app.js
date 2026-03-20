@@ -5,12 +5,14 @@ const cors = require('cors');
 
 const authRoutes = require('./routes/authRoutes');
 
+const taskRoutes = require('./routes/taskRoutes')
 
 // It allows your backend to accept requests from a different origin (domain/port).
 
 app.use(express.json());
 app.use(cors());
 app.use('/api/auth', authRoutes);
+//“Use all routes inside authRoutes with a base path /api/auth”
 
 
 app.get('/', (req,res) => {
