@@ -62,19 +62,50 @@ Built as part of a backend developer assignment.
 # 📁 Project Structure
 
 ```
-backend/
-  config/
-  controllers/
-  middleware/
-  models/
-  routes/
-  .env
-  app.js
-
-frontend/
-  src/
-    pages/
-    App.jsx
+task-manager/
+│
+├── backend/
+│   ├── config/
+│   │   └── db.js
+│   │
+│   ├── controllers/
+│   │   ├── authController.js
+│   │   └── taskController.js
+│   │
+│   ├── middleware/
+│   │   ├── authMiddleware.js
+│   │   └── roleMiddleware.js
+│   │
+│   ├── models/
+│   │   ├── User.js
+│   │   └── Task.js
+│   │
+│   ├── routes/
+│   │   ├── authRoutes.js
+│   │   └── taskRoutes.js
+│   │
+│   ├── .env
+│   ├── .gitignore
+│   ├── app.js
+│   ├── package.json
+│   └── package-lock.json
+│
+├── frontend/
+│   ├── src/
+│   │   ├── pages/
+│   │   │   ├── Login.jsx
+│   │   │   ├── Register.jsx
+│   │   │   └── Dashboard.jsx
+│   │   ├── App.jsx
+│   │   ├── main.jsx
+│   │   └── index.css
+│   │
+│   ├── .gitignore
+│   ├── package.json
+│   └── vite.config.js
+│
+├── README.md
+└── .gitignore  
 ```
 
 ---
