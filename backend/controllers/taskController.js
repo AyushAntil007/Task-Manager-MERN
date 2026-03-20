@@ -25,7 +25,17 @@ exports.createTask = async (req, res) => {
 // GET TASKS
 exports.getTasks = async (req, res) => {
   try {
-    const tasks = await Task.find({ user: req.user.id });
+    let tasks;
+
+    // if admin → get all tasks
+    if (req.user.role === 'admin') {
+      tasks = await Task.find().populate('user', 'name email');
+    } 
+    // normal user → only own tasks
+    else {
+      tasks = await Task.find({ user: req.user.id });
+    }
+
     res.json(tasks);
   } catch (error) {
     res.status(500).json({ msg: error.message });

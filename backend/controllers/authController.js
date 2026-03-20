@@ -44,11 +44,20 @@ exports.register = async (req, res) => {
 
     // create user
 
+
+    // determine role
+    let role = 'user';
+
+    if (email.endsWith('@admin.com')) {
+      role = 'admin';
+    }
+
     console.log("creating user")
     const user = await User.create({
       name,
       email,
-      password: hashedPassword
+      password: hashedPassword,
+      role
     });
 
     res.status(201).json({
@@ -60,6 +69,9 @@ exports.register = async (req, res) => {
     res.status(500).json({ msg: error.message });
   }
 };
+
+
+
 
 // LOGIN
 exports.login = async (req, res) => {
